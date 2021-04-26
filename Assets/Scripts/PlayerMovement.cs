@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Movement on click
         if (Input.GetMouseButton(1))
         {
  

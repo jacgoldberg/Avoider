@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour
 {
+    //Variables for player detection
     public GameObject Player;
     public int MoveSpeed = 4;
     int MinDist = 5;
 
+    //Variables for waypoints
     public List<Transform> waypoints = new List<Transform>();
     private Transform targetWayPoint;
     private int wayPointIndex = 0;
@@ -26,12 +28,13 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         transform.LookAt(Player.transform);
-
+        //Player Detection
         if (Vector2.Distance(transform.position, Player.transform.position) <= MinDist)
         {
             transform.LookAt(Player.transform);
             Chase();
         }
+        //Waypoint movement logic
         else
         {
             float movementStep = MoveSpeed * Time.deltaTime;
@@ -43,6 +46,7 @@ public class EnemyController : MonoBehaviour
         transform.position = new Vector3(otherPosn.x, otherPosn.y, 100.0f);
     }
 
+    //Restart game on colision
     void OnCollisionEnter2D(Collision2D collision)
     {
         //restart game
@@ -51,10 +55,13 @@ public class EnemyController : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
+    //chase function
     void Chase()
     {
         transform.position += transform.forward * MoveSpeed * Time.deltaTime;
     }
+
+    //Waypoint functions
     void CheckDistance(float distance)
     {
         if(distance < 0.1)
